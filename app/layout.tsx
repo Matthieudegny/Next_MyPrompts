@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 import "@/styles/globals.css";
 
-// import Nav from "@components/Nav";
-// import Provider from "@components/Provider";
+import Nav from "@components/Nav";
+import Provider from "@components/Provider";
 
 interface Metadata {
   title: string;
