@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 
 interface ProviderProps {
-  session: Session;
+  session?: Session;
   children: React.ReactNode;
 }
 
