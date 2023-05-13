@@ -7,8 +7,8 @@ import { connectToDB } from "../../../../utils/database.js";
 const handler = NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
     }),
   ],
   callbacks: {
@@ -24,19 +24,19 @@ const handler = NextAuth({
         await connectToDB();
 
         // check if user already exists
-        const userExists = await User.findOne({ email: profile.email });
+        const userExists = await User.findOne({ email: profile?.email });
 
         // if not, create a new document and save user in MongoDB
-        if (!userExists) {
+        if (!userExists && profile) {
           await User.create({
-            email: profile.email,
-            username: profile.name.replace(" ", "").toLowerCase(),
-            image: profile.picture,
+            email: profile?.email,
+            username: profile?.name?.replace(" ", "").toLowerCase(),
+            image: profile?.picture || "",
           });
         }
 
         return true;
-      } catch (error) {
+      } catch (error: any) {
         console.log("Error checking if user exists: ", error.message);
         return false;
       }
